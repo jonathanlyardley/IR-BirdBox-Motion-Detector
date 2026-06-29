@@ -1,20 +1,20 @@
 # IR BirdBox Motion Detector
 
-A low-cost Raspberry Pi motion detector for an infrared nestbox or birdbox camera.
+A low-cost Raspberry Pi motion detector for an infrared nestbox or birdbox camera, with short clip recording, local live view, and email motion alerts as a key feature.
 
-It watches a low-resolution camera stream, filters out common false triggers such as shadows, sensor noise, and IR warm-up artefacts, records short MP4 clips when motion is confirmed, and offers a temporary local MJPEG live view.
+It watches a low-resolution camera stream, filters out common false triggers such as shadows, sensor noise, and IR warm-up artefacts, records short MP4 clips when motion is confirmed, and emails you a notification with the clip or a fallback still image.
 
-This is a practical starter project for hobbyists, ecologists, conservation groups, and citizen-science tinkerers who want a small offline-first wildlife camera rather than a cloud camera subscription.
+This is a practical starter project for hobbyists, ecologists, conservation groups, and citizen-science tinkerers who want a small offline-first wildlife camera with useful alerts rather than a cloud camera subscription.
 
-## What It Does
+## Key Features
 
-- Runs on a Raspberry Pi with a camera module.
-- Uses frame-difference motion detection tuned for a small birdbox scene.
-- Switches between bright and dark sensitivity profiles.
-- Turns an IR LED ring on for dark monitoring and local live view.
-- Records short clips with `rpicam-vid`.
-- Can send optional email notifications if you configure SMTP credentials.
-- Serves a local browser stream at `http://<your-pi-hostname>:8080/`.
+- Motion-triggered MP4 recording on a Raspberry Pi camera module.
+- Email notifications when motion is detected, with MP4 attachment when small enough and JPEG fallback for larger clips.
+- Frame-difference motion detection tuned for a small birdbox scene.
+- Bright and dark sensitivity profiles for day/night operation.
+- IR LED control for dark monitoring and local live view.
+- Temporary local browser stream at `http://<your-pi-hostname>:8080/`.
+- Strict `.gitignore` defaults so private footage, logs, and `.env` credentials are not committed by accident.
 
 ## Hardware
 
@@ -61,7 +61,33 @@ Important values:
 - `BIRDBOX_STREAM_HOST`: hostname or local IP you will type in your browser.
 - `BIRDBOX_IR_GPIO_PIN`: GPIO pin controlling the IR light.
 - `BIRDBOX_WIFI_IDLE_AUTO_OFF`: keep `false` until you have working Wi-Fi services.
-- `BIRDBOX_SMTP_HOST`: leave blank to disable email safely.
+- `BIRDBOX_SMTP_HOST`: SMTP server for email notifications; leave blank to disable email safely.
+- `BIRDBOX_EMAIL_FROM`, `BIRDBOX_EMAIL_PASSWORD`, and `BIRDBOX_EMAIL_TO`: private email settings stored only in `.env`.
+
+## Email Notifications
+
+Email alerts are one of the main reasons to run this project unattended. When motion is confirmed, the script can send an email containing:
+
+- detection time;
+- day/night mode;
+- motion score;
+- clip filename;
+- the MP4 clip if it is below the configured size limit;
+- a JPEG still if the clip is too large for email.
+
+Email is disabled automatically unless all required SMTP settings are present. Keep these values in `.env`; never commit real email credentials to GitHub.
+
+Example settings:
+
+```text
+BIRDBOX_SMTP_HOST=smtp.example.com
+BIRDBOX_SMTP_PORT=465
+BIRDBOX_EMAIL_FROM=birdbox@example.com
+BIRDBOX_EMAIL_PASSWORD=use-an-app-password-here
+BIRDBOX_EMAIL_TO=you@example.com
+```
+
+For Gmail or similar providers, use an app-specific password rather than your normal account password.
 
 ## Run Manually
 
@@ -124,7 +150,8 @@ The `clips/` and `frames/` folders are ignored by Git so private footage is not 
 | IR does not appear to work | Check wiring, power, and `BIRDBOX_IR_GPIO_PIN`; GPIO state alone does not prove the LEDs are lit. |
 | Too many false triggers | Review clips and logs before changing thresholds. Shadows and reflections can look like motion. |
 | Live stream opens but detection pauses | This is expected. The single camera pipeline is borrowed for live view. |
-| No emails | Confirm `BIRDBOX_SMTP_HOST`, sender, password/app password, and recipient are set in private `.env`. |
+| No emails | Confirm `BIRDBOX_SMTP_HOST`, sender, password/app password, and recipient are set in private `.env`; then check `logs/events.log` for email status. |
+| Clip missing from email | Large clips fall back to a JPEG still so the alert still arrives. |
 
 ## Privacy, Wildlife, And Safety
 
@@ -135,6 +162,10 @@ The `clips/` and `frames/` folders are ignored by Git so private footage is not 
 - This project is provided as a hobbyist/educational starter kit. You are responsible for safe installation and lawful use.
 
 See [docs/security.md](docs/security.md) before publishing forks or sharing deployments.
+
+## Suggested GitHub Description
+
+Raspberry Pi IR birdbox motion detector with MP4 recording, email motion alerts, false-positive filtering, and local live view.
 
 ## Licence
 
