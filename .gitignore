@@ -1,0 +1,38 @@
+# Secrets and local config
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.ppk
+*.p12
+
+# Private deployment notes and remote captures
+.remote/
+
+# Runtime media and data
+clips/
+frames/
+logs/
+*.mp4
+*.mjpg
+*.jpg
+*.jpeg
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
