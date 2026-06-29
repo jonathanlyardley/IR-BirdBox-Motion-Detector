@@ -153,6 +153,14 @@ The `clips/` and `frames/` folders are ignored by Git so private footage is not 
 | No emails | Confirm `BIRDBOX_SMTP_HOST`, sender, password/app password, and recipient are set in private `.env`; then check `logs/events.log` for email status. |
 | Clip missing from email | Large clips fall back to a JPEG still so the alert still arrives. |
 
+## Before Making A Fork Or Repo Public
+
+- Confirm `.env`, `clips/`, `frames/`, `logs/`, databases, and private deployment notes are not tracked by Git.
+- Do not publish raw nestbox footage unless you have deliberately reviewed it.
+- Treat the live MJPEG stream as unauthenticated: keep it on your LAN, do not port-forward it, and use a VPN or private tunnel for remote access.
+- Use app-specific email passwords and rotate any credential that was ever committed, even briefly.
+- Enable GitHub secret scanning and push protection where available.
+
 ## Privacy, Wildlife, And Safety
 
 - Do not publish raw nestbox footage unless you have deliberately reviewed it.
