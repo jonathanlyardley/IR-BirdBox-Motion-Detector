@@ -1,0 +1,16 @@
+[Unit]
+Description=IR BirdBox motion detector
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/birdbox
+Environment=BIRDBOX_ENV_FILE=/home/pi/birdbox/.env
+ExecStart=/home/pi/birdbox/.venv/bin/python /home/pi/birdbox/src/motion_watch.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
