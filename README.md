@@ -1,10 +1,10 @@
 # IR BirdBox Motion Detector
 
-A low-cost Raspberry Pi motion detector for an infrared nestbox or birdbox camera, with short clip recording, local live view, and email motion alerts as a key feature.
+These are the scripts for a use of Raspberry Pi camera motion detection for an infrared nestbox or birdbox, with short clip recording on motion detection, local livestreaming, and email alerts on motion as key features.
 
-It watches a low-resolution camera stream, filters out common false triggers such as shadows, sensor noise, and IR warm-up artefacts, records short MP4 clips when motion is confirmed, and emails you a notification with the clip or a fallback still image.
+The script filters out common false triggers such as shadows, sensor noise, and IR warm-up artefacts, records short MP4 clips when motion is confirmed, and emails you a notification with the clip or a fallback still image.
 
-This is a practical starter project for hobbyists, ecologists, conservation groups, and citizen-science tinkerers who want a small offline-first wildlife camera with useful alerts rather than a cloud camera subscription.
+This is a practical starter project for hobbyists, ecologists, conservation groups, and citizen-science tinkerers who want a customisable small offline-first wildlife camera with useful alerts rather than a cloud camera subscription.
 
 ## Key Features
 
@@ -171,9 +171,6 @@ The `clips/` and `frames/` folders are ignored by Git so private footage is not 
 
 See [docs/security.md](docs/security.md) before publishing forks or sharing deployments.
 
-## Suggested GitHub Description
-
-Raspberry Pi IR birdbox motion detector with MP4 recording, email motion alerts, false-positive filtering, and local live view.
 
 ## Licence
 
